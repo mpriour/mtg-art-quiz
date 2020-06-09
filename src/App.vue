@@ -5,7 +5,7 @@
         <img src="./assets/mtg-colors.jpg" alt="The 5 color symbols of Magic the Gathering" />
       </router-link>
       <router-link to="/">Home</router-link>|
-      <router-link to="/about">About</router-link>
+      <router-link to="/user">User</router-link>
     </nav>
     <router-view class="main-view" />
   </div>
