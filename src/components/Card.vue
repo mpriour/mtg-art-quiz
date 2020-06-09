@@ -1,7 +1,7 @@
 <template>
   <img
-    :src="card.imageLinks.art_crop"
-    alt
+    :src="artSrc"
+    alt=""
     class="art"
     :class="{loaded: imgLoaded}"
     @load="setLoaded"
@@ -24,7 +24,10 @@ export default {
     };
   },
   computed: {
-    ...mapState(["quizStatus"])
+    ...mapState(["quizStatus"]),
+    artSrc(){
+      return this.card?.imageLinks?.art_crop ?? ''
+    }
   },
   methods: {
     setLoaded() {

@@ -1,44 +1,76 @@
 <template>
   <div class="quiz-container">
-    <quiz-loading :error="error" v-if="!this.ready || this.error"></quiz-loading>
+    <quiz-loading v-if="!ready || error" :error="error"></quiz-loading>
+    <div v-if="current===0">
+      <div class="status">Quiz Complete</div>
+      <scores></scores>
+      <q-button @click="playAgain">Play Again?</q-button>
+    </div>
     <div v-else>
       <scores></scores>
-      <quiz></quiz>
+      <div class="status">{{current}} of {{total}}</div>
+      <quiz @update="incrementQuiz" ref="quiz"></quiz>
     </div>
   </div>
 </template>
 
 <script>
-import QuizLoading from './QuizLoading.vue'
-import Quiz from './Quiz.vue'
-import Scores from './Scores.vue'
-import { mapState } from 'vuex'
+import QuizLoading from "./QuizLoading.vue";
+import Quiz from "./Quiz.vue";
+import Scores from "./Scores.vue";
+import { mapState } from "vuex";
 export default {
-  name: 'QuizContainer',
+  name: "QuizContainer",
   components: {
-    Quiz, QuizLoading, Scores
+    Quiz,
+    QuizLoading,
+    Scores
   },
   props: {
     format: {
       type: String,
-      default: 'modern'
+      default: "modern"
+    },
+    total: {
+      type: String,
+      default: "10"
+    }
+  },
+  data(){
+    return {
+      current: 1
     }
   },
   computed: {
-    ...mapState(['quizStatus']),
-    ready(){
-      return this.quizStatus == 'ready'
+    ...mapState(["quizStatus"]),
+    ready() {
+      return this.quizStatus == "ready";
     },
-    error(){
-      return this.quizStatus == 'error'
+    error() {
+      return this.quizStatus == "error";
     }
   },
-  mounted(){
-    this.$store.dispatch('makeRandom', { format: this.format })
+  methods: {
+    newGame() {
+      this.$store.dispatch("makeRandom", {
+        format: this.format,
+        count: parseInt(this.total, 10)
+      });
+      this.$refs.quiz.ndx = 0
+    },
+    playAgain() {
+      this.current = 1
+      setTimeout(()=>this.newGame(), 0)
+    },
+    incrementQuiz(ndx) {
+      this.current = ndx + 1
+    }
+  },
+  mounted() {
+    this.newGame();
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
-
 </style>
