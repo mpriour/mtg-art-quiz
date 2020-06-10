@@ -66,13 +66,20 @@ export default {
     transform: rotate(360deg);
   }
 }
-
+$breakpoint-tablet: 768px;
 .card {
   max-height: 50vh;
   img {
     width: 100%;
     height: 100%;
     object-fit: scale-down;
+  }
+}
+@media (min-width: $breakpoint-tablet) {
+  .card img {
+    width: initial;
+    height: initial;
+    object-fit: contain;
   }
 }
 </style>
