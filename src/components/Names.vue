@@ -26,6 +26,7 @@ export default {
       this.answered = true
       if(this.checkCorrect(name)){
         btn.classList.add('correct')
+        this.$emit('correct')
       } else {
         const i = this.getCorrectIndex()
         this.$refs.nbuttons[i].classList.add('correct')

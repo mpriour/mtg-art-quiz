@@ -1,5 +1,5 @@
 <template>
-  <quiz-container :format="format" total=5></quiz-container>
+  <quiz-container :format="format" :total="5"></quiz-container>
 </template>
 
 <script>

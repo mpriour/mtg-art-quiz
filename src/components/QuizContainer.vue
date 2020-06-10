@@ -3,8 +3,8 @@
     <quiz-loading v-if="!ready || error" :error="error"></quiz-loading>
     <div v-if="current===0">
       <div class="status">Quiz Complete</div>
-      <scores></scores>
-      <q-button @click="playAgain">Play Again?</q-button>
+      <scores :showLast="false"></scores>
+      <q-button @click.native="playAgain">Play Again?</q-button>
     </div>
     <div v-else>
       <scores></scores>
@@ -18,13 +18,15 @@
 import QuizLoading from "./QuizLoading.vue";
 import Quiz from "./Quiz.vue";
 import Scores from "./Scores.vue";
-import { mapState } from "vuex";
+import QButton from "./QButton.vue";
+import { mapState, mapActions } from "vuex";
 export default {
   name: "QuizContainer",
   components: {
     Quiz,
     QuizLoading,
-    Scores
+    Scores,
+    QButton
   },
   props: {
     format: {
@@ -32,8 +34,8 @@ export default {
       default: "modern"
     },
     total: {
-      type: String,
-      default: "10"
+      type: Number,
+      default: 10
     }
   },
   data(){
@@ -42,7 +44,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(["quizStatus"]),
+    ...mapState(["quizStatus","highScore","currentScore"]),
     ready() {
       return this.quizStatus == "ready";
     },
@@ -51,15 +53,17 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['makeRandom','saveLastScore','saveHighScore','clearCurrentScore']),
     newGame() {
-      this.$store.dispatch("makeRandom", {
+      this.makeRandom({
         format: this.format,
-        count: parseInt(this.total, 10)
+        count: this.total
       });
       this.$refs.quiz.ndx = 0
     },
     playAgain() {
       this.current = 1
+      this.clearCurrentScore()
       setTimeout(()=>this.newGame(), 0)
     },
     incrementQuiz(ndx) {
@@ -68,6 +72,16 @@ export default {
   },
   mounted() {
     this.newGame();
+  },
+  watch:{
+    current(val){
+      if(val === 0){
+        this.saveLastScore({score: this.currentScore})
+        if(this.currentScore > this.highScore){
+          this.saveHighScore({score: this.currentScore})
+        }
+      }
+    }
   }
 };
 </script>

@@ -102,6 +102,12 @@ export default new Vuex.Store({
         localStorage.setItem('quiz_highscore', score)
       }
     },
+    addCurrentScore({commit, state}, {points}){
+      commit('setCurrentScore', state.currentScore + points)
+    },
+    clearCurrentScore({commit}){
+      commit('setCurrentScore', 0)
+    }
   },
   modules: {
   }

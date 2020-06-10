@@ -9,10 +9,6 @@
 <script>
 export default {
   props:{
-    text: {
-      type: String,
-      default: ''
-    },
     link: {
       type: String,
       default: ''

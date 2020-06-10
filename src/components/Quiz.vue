@@ -1,12 +1,12 @@
 <template>
   <div>
     <card :card="currentCard"></card>
-    <names :nset="nameSet"></names>
+    <names :nset="nameSet" @correct="incrementScore"></names>
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import Card from './Card.vue'
 import Names from './Names.vue'
 export default {
@@ -20,7 +20,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['randomSet', 'names']),
+    ...mapState(['randomSet', 'names', 'currentScore']),
       nameSet(){
         const rnames = []
         const ndxs = new Set()
@@ -35,9 +35,13 @@ export default {
       },
       currentCard(){
         return this.ndx == -1 ? {} : this.randomSet[this.ndx]
+      },
+      cardPoint(){
+        return this.randomSet.length ? Math.round(100 / this.randomSet.length) : 0
       }
   },
   methods:{
+    ...mapActions(['addCurrentScore']),
     checkCorrect(name){
       return name == this.currentCard.name
     },
@@ -58,6 +62,9 @@ export default {
         this.ndx++
       }
       this.$emit('update', this.ndx)
+    },
+    incrementScore(){
+      this.addCurrentScore({points:this.cardPoint})
     }
   },
   provide(){
