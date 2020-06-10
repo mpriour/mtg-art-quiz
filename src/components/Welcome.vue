@@ -1,20 +1,22 @@
 <template>
   <div class="hello">
-    <h1>Welcome to the MTG Art Quiz</h1>
-    <label>Username : <input :value="user" @blur="setUser" /></label>
-    <q-button link="/standard">Standard</q-button>
-    <q-button link="/pioneer" class="strikethrough" disabled>
-      Pioneer
-      <template slot="aside">Coming Soon</template>
-    </q-button>
-    <q-button link="/modern" class="strikethrough" disabled>
-      Modern
-      <template slot="aside">Coming Later</template>
-    </q-button>
-    <q-button link="/pauper" class="strikethrough" disabled>
-      Pauper
-      <template slot="aside">To Be Done</template>
-    </q-button>
+    <h1>Welcome to the<br><i>Magic : The Gathering</i><br>Art Quiz</h1>
+    <label>Username<br><input :value="user" @blur="setUser" /></label>
+    <div class="button-container">
+      <q-button link="/standard">Standard</q-button>
+      <q-button link="/pioneer" class="strikethrough" disabled>
+        Pioneer
+        <template slot="aside">Coming Soon</template>
+      </q-button>
+      <q-button link="/modern" class="strikethrough" disabled>
+        Modern
+        <template slot="aside">Coming Later</template>
+      </q-button>
+      <q-button link="/pauper" class="strikethrough" disabled>
+        Pauper
+        <template slot="aside">To Be Done</template>
+      </q-button>
+    </div>
   </div>
 </template>
 
@@ -43,6 +45,10 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+h1 {
+  margin: 60px 0;
+  font-size: 3rem;
+}
 h3 {
   margin: 40px 0 0;
 }
@@ -56,5 +62,21 @@ li {
 }
 a {
   color: #42b983;
+}
+.button-container {
+  display: grid;
+  grid-template: 1fr / 1fr 1fr;
+  max-width: 700px;
+  text-align: center;
+  margin: 2rem auto;
+}
+label {
+  font-size:1.75rem;
+}
+input {
+  font-size: 1.75rem;
+  border-radius: 5px;
+  border: 1px solid goldenrod;
+  text-align: center;
 }
 </style>
