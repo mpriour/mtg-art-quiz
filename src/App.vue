@@ -27,7 +27,7 @@ body {
   nav {
     padding: 5px;
     position: fixed;
-    background-color: yellow;
+    background-color: goldenrod;
     top: 0;
     left: -10px;
     width: 100vw;
@@ -46,7 +46,7 @@ body {
       color: #2c3e50;
 
       &.router-link-exact-active {
-        color: #42b983;
+        color:honeydew;
       }
     }
   }

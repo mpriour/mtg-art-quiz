@@ -71,7 +71,8 @@ export default {
     }
   },
   mounted() {
-    this.newGame();
+    this.clearCurrentScore()
+    this.newGame()
   },
   watch:{
     current(val){
