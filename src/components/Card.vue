@@ -45,6 +45,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+$breakpoint-tablet: 768px;
 .art {
   display: none;
 }
@@ -66,7 +67,6 @@ export default {
     transform: rotate(360deg);
   }
 }
-$breakpoint-tablet: 768px;
 .card {
   max-height: 50vh;
   img {
