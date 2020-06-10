@@ -1,7 +1,14 @@
 <template>
   <div class="card">
-    <img :src="artSrc" alt="" class="art" :class="{loaded: imgLoaded}" @load="setLoaded(true)" @error="setLoaded(false)" />
-    <img src="../assets/mtg-colors.png" alt="" class="loader" :class="{loaded: imgLoaded}" />
+    <img
+      :src="artSrc"
+      alt
+      class="art"
+      :class="{loaded: imgLoaded}"
+      @load="setLoaded(true)"
+      @error="setLoaded(false)"
+    />
+    <img src="../assets/mtg-colors.png" alt class="loader" :class="{loaded: imgLoaded}" />
   </div>
 </template>
 
@@ -37,26 +44,35 @@ export default {
 };
 </script>
 
-<style>
-.art{
+<style lang="scss" scoped>
+.art {
   display: none;
 }
-.art.loaded{
+.art.loaded {
   display: initial;
 }
 .loader {
-    animation: load-spin 1s linear infinite;
+  animation: load-spin 1s linear infinite;
 }
 .loader.loaded {
   display: none;
 }
 @keyframes load-spin {
-    0% {
-        transform: rotate(0deg);
-    }
+  0% {
+    transform: rotate(0deg);
+  }
 
-    100% {
-        transform: rotate(360deg);
-    }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.card {
+  max-height: 50vh;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
 }
 </style>

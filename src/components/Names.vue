@@ -42,11 +42,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+$breakpoint-tablet: 768px;
 .name-container {
   display: grid;
   grid-template: 1fr / 1fr 1fr;
-  margin: auto;
-  width: 700px;
+  margin: 1rem auto;
+  max-width: 95%;
   .name.correct {
     border-color: green;
     background-color: lightgreen;
@@ -71,5 +72,10 @@ export default {
   border-color: red;
   background-color: palevioletred;
   color: #333;
+}
+@media (max-width: $breakpoint-tablet) {
+  .name {
+    font-size: large;
+  }
 }
 </style>

@@ -43,28 +43,33 @@ export default {
     })
   },
   methods: {
-    ...mapActions('u',['saveUsername', 'initializeUser']),
-    ...mapActions('q',['initializeCards']),
+    ...mapActions("u", ["saveUsername", "initializeUser"]),
+    ...mapActions("q", ["initializeCards"]),
     setUser(evt) {
-      this.saveUsername({ name: evt.target.value })
+      this.saveUsername({ name: evt.target.value });
     }
   },
   mounted() {
-    this.initializeUser()
-    this.initializeCards()
+    this.initializeUser();
+    this.initializeCards();
   }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+$breakpoint-tablet: 768px;
+.hello {
+  width: 95vw;
+}
 h1 {
-  margin: 60px 0;
-  font-size: 3rem;
+  margin: 30px 0;
+  font-size: 1.75rem;
 }
 h3 {
-  margin: 40px 0 0;
+  margin: 20px 0 0;
 }
+
 ul {
   list-style-type: none;
   padding: 0;
@@ -79,17 +84,33 @@ a {
 .button-container {
   display: grid;
   grid-template: 1fr / 1fr 1fr;
-  max-width: 700px;
+  max-width: 95%;
   text-align: center;
   margin: 2rem auto;
 }
 label {
-  font-size: 1.75rem;
+  font-size: 1.33rem;
 }
 input {
-  font-size: 1.75rem;
-  border-radius: 5px;
+  font-size: 1.33rem;
+  border-radius: 10px;
   border: 1px solid goldenrod;
   text-align: center;
+}
+
+@media (min-width: $breakpoint-tablet) {
+  .hello {
+    width: 60vw;
+  }
+  h1 {
+    margin: 60px 0;
+    font-size: 3rem;
+  }
+  h3 {
+    margin: 40px 0 0;
+  }
+  label, input {
+    font-size: 1.75rem;
+  }
 }
 </style>

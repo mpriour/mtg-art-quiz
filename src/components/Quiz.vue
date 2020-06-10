@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="quiz-container">
     <card :card="currentCard"></card>
     <names :nset="nameSet" @correct="incrementScore"></names>
   </div>
@@ -66,6 +66,9 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="scss" scoped>
+.quiz-container{
+  width: 100%;
+  height: 100%;
+}
 </style>

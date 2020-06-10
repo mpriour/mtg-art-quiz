@@ -22,7 +22,9 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   .main-view {
-    margin-top: 60px;
+    display: flex;
+    flex-direction: column;
+    margin: 60px auto 0 auto;
   }
   nav {
     padding: 5px;

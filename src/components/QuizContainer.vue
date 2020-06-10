@@ -27,36 +27,35 @@ export default {
     }
   },
   computed: {
-    ...mapState('q',["quizStatus","qindex","randomSet"]),
-    ...mapState('u',["highScore","currentScore"]),
+    ...mapState("q", ["quizStatus", "qindex", "randomSet"]),
+    ...mapState("u", ["highScore", "currentScore"]),
     ready() {
       return this.quizStatus == "ready";
     },
     error() {
       return this.quizStatus == "error";
     },
-    currentComponent(){
-      if(!this.ready || this.error){
-        return QuizLoading
+    currentComponent() {
+      if (!this.ready || this.error) {
+        return QuizLoading;
+      } else if (this.qindex === -1) {
+        return QuizComplete;
       }
-      else if(this.qindex === -1){
-        return QuizComplete
-      }
-      return QuizActive
+      return QuizActive;
     },
-    statusMessage(){
-      if(this.qindex === -1){
-        return "Quiz Complete"
+    statusMessage() {
+      if (this.qindex === -1) {
+        return "Quiz Complete";
       } else {
-        return `${this.qindex + 1} of ${this.randomSet.length}`
+        return `${this.qindex + 1} of ${this.randomSet.length}`;
       }
     }
   },
   methods: {
-    ...mapActions('q',['makeRandom', 'resetIndex', 'clearRandom']),
-    ...mapActions('u',['clearCurrentScore']),
+    ...mapActions("q", ["makeRandom", "resetIndex", "clearRandom"]),
+    ...mapActions("u", ["clearCurrentScore"]),
     newGame() {
-      this.clearRandom()
+      this.clearRandom();
       this.makeRandom({
         format: this.format,
         count: this.total
@@ -64,16 +63,25 @@ export default {
     }
   },
   mounted() {
-    this.clearCurrentScore()
-    this.newGame()
+    this.clearCurrentScore();
+    this.newGame();
   },
-  watch:{
-    randomSet(){
-      this.resetIndex()
+  watch: {
+    randomSet() {
+      this.resetIndex();
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
+$breakpoint-tablet: 768px;
+.quiz-container {
+  width: 95vw;
+}
+@media (min-width: $breakpoint-tablet) {
+  .quiz-container {
+    width: 60vw;
+  }
+}
 </style>

@@ -26,10 +26,10 @@ export default {
   name: "User",
   components: { QButton },
   computed: {
-    ...mapState('u',["highScore", "lastScore", "username"])
+    ...mapState("u", ["highScore", "lastScore", "username"])
   },
   methods: {
-    ...mapActions('u',["clearLastScore", "clearHighScore"]),
+    ...mapActions("u", ["clearLastScore", "clearHighScore"]),
     clearScores() {
       this.clearLastScore();
       this.clearHighScore();
@@ -39,23 +39,33 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  h3, p {
-    font-size: x-large;
-  }
-  p {
-    margin: 2px 0;
-  }
-  .container{
-    display: flex;
-    margin: 1rem auto;
+$breakpoint-tablet: 768px;
+h3,
+p {
+  font-size: x-large;
+}
+p {
+  margin: 2px 0;
+}
+.container {
+  display: flex;
+  margin: 1rem auto;
+  max-width: 95vw;
+  text-align: center;
+}
+.container > div {
+  margin: 0 1rem;
+  text-align: center;
+}
+.highlight {
+  color: goldenrod;
+}
+@media (min-width: $breakpoint-tablet) {
+  .container {
     max-width: 50vw;
-    text-align: center;
   }
   .container > div {
-    margin: auto;
-    text-align: center;
+    margin: 0 2.25rem;
   }
-  .highlight {
-    color: goldenrod;
-  }
+}
 </style>
