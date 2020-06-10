@@ -14,13 +14,8 @@ export default {
   components: {
     Card, Names
   },
-  data(){
-    return {
-      ndx: 0
-    }
-  },
   computed: {
-    ...mapState(['randomSet', 'names', 'currentScore']),
+    ...mapState(['randomSet', 'names', 'currentScore', 'qindex']),
       nameSet(){
         const rnames = []
         const ndxs = new Set()
@@ -34,14 +29,14 @@ export default {
         return rnames
       },
       currentCard(){
-        return this.ndx == -1 ? {} : this.randomSet[this.ndx]
+        return this.qindex == -1 ? {} : this.randomSet[this.qindex]
       },
       cardPoint(){
         return this.randomSet.length ? Math.round(100 / this.randomSet.length) : 0
       }
   },
   methods:{
-    ...mapActions(['addCurrentScore']),
+    ...mapActions(['addCurrentScore','incrementIndex']),
     checkCorrect(name){
       return name == this.currentCard.name
     },
@@ -55,14 +50,6 @@ export default {
       })
       return i
     },
-    nextCard(){
-      if(this.ndx == this.randomSet.length-1){
-        this.ndx = -1
-      } else {
-        this.ndx++
-      }
-      this.$emit('update', this.ndx)
-    },
     incrementScore(){
       this.addCurrentScore({points:this.cardPoint})
     }
@@ -71,7 +58,7 @@ export default {
     return {
       checkCorrect: this.checkCorrect,
       getCorrectIndex: this.getCorrectIndex,
-      nextCard: this.nextCard
+      nextCard: this.incrementIndex
     }
   }
 }

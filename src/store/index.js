@@ -12,7 +12,8 @@ export default new Vuex.Store({
     lastScore: 0,
     highScore: 0,
     currentScore: 0,
-    quizStatus: 'empty'
+    quizStatus: 'empty',
+    qindex: 0
   },
   mutations: {
     setCards(state, cards){
@@ -41,6 +42,9 @@ export default new Vuex.Store({
     },
     setStatus(state, status){
       state.quizStatus = status
+    },
+    setIndex(state, i){
+      state.qindex = i
     }
   },
   actions: {
@@ -116,6 +120,18 @@ export default new Vuex.Store({
       commit('setHighScore', 0)
       localStorage.setItem('quiz_highscore', 0)
     },
+    incrementIndex({commit, state}){
+      let ndx = state.qindex;
+      if(ndx == state.randomSet.length - 1){
+        ndx = -1
+      } else {
+        ndx++
+      }
+      commit('setIndex', ndx)
+    },
+    resetIndex({commit}){
+      commit('setIndex', 0)
+    }
   },
   modules: {
   }
