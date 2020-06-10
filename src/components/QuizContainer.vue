@@ -1,32 +1,20 @@
 <template>
   <div class="quiz-container">
-    <quiz-loading v-if="!ready || error" :error="error"></quiz-loading>
-    <div v-if="current===0">
-      <div class="status">Quiz Complete</div>
-      <scores :showLast="false"></scores>
-      <q-button @click.native="playAgain">Play Again?</q-button>
-    </div>
-    <div v-else>
-      <scores></scores>
-      <div class="status">{{current}} of {{total}}</div>
-      <quiz @update="incrementQuiz" ref="quiz"></quiz>
-    </div>
+    <component :is="currentComponent" :error="error" @restart="newGame">{{statusMessage}}</component>
   </div>
 </template>
 
 <script>
 import QuizLoading from "./QuizLoading.vue";
-import Quiz from "./Quiz.vue";
-import Scores from "./Scores.vue";
-import QButton from "./QButton.vue";
+import QuizActive from "./QuizActive.vue";
+import QuizComplete from "./QuizComplete.vue";
 import { mapState, mapActions } from "vuex";
 export default {
   name: "QuizContainer",
   components: {
-    Quiz,
+    QuizActive,
     QuizLoading,
-    Scores,
-    QButton
+    QuizComplete
   },
   props: {
     format: {
@@ -38,36 +26,39 @@ export default {
       default: 10
     }
   },
-  data(){
-    return {
-      current: 1
-    }
-  },
   computed: {
-    ...mapState(["quizStatus","highScore","currentScore"]),
+    ...mapState(["quizStatus","highScore","currentScore","qindex","randomSet"]),
     ready() {
       return this.quizStatus == "ready";
     },
     error() {
       return this.quizStatus == "error";
+    },
+    currentComponent(){
+      if(!this.ready || this.error){
+        return QuizLoading
+      }
+      else if(this.qindex === -1){
+        return QuizComplete
+      }
+      return QuizActive
+    },
+    statusMessage(){
+      if(this.qindex === -1){
+        return "Quiz Complete"
+      } else {
+        return `${this.qindex + 1} of ${this.randomSet.length}`
+      }
     }
   },
   methods: {
-    ...mapActions(['makeRandom','saveLastScore','saveHighScore','clearCurrentScore']),
+    ...mapActions(['makeRandom','clearCurrentScore', 'resetIndex', 'clearRandom']),
     newGame() {
+      this.clearRandom()
       this.makeRandom({
         format: this.format,
         count: this.total
       });
-      this.$refs.quiz.ndx = 0
-    },
-    playAgain() {
-      this.current = 1
-      this.clearCurrentScore()
-      setTimeout(()=>this.newGame(), 0)
-    },
-    incrementQuiz(ndx) {
-      this.current = ndx + 1
     }
   },
   mounted() {
@@ -75,13 +66,8 @@ export default {
     this.newGame()
   },
   watch:{
-    current(val){
-      if(val === 0){
-        this.saveLastScore({score: this.currentScore})
-        if(this.currentScore > this.highScore){
-          this.saveHighScore({score: this.currentScore})
-        }
-      }
+    randomSet(){
+      this.resetIndex()
     }
   }
 };
