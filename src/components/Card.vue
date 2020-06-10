@@ -70,8 +70,8 @@ export default {
 .card {
   max-height: 50vh;
   img {
-    width: auto;
-    height: auto;
+    width: 100%;
+    height: 100%;
     object-fit: scale-down;
   }
 }
