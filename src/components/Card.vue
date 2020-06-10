@@ -1,12 +1,11 @@
 <template>
   <div class="card">
-    <img :src="artSrc" alt="" class="art" :class="{loaded: imgLoaded}" @load="setLoaded" />
+    <img :src="artSrc" alt="" class="art" :class="{loaded: imgLoaded}" @load="setLoaded(true)" @error="setLoaded(false)" />
     <img src="../assets/mtg-colors.png" alt="" class="loader" :class="{loaded: imgLoaded}" />
   </div>
 </template>
 
 <script>
-import { mapState } from "vuex";
 export default {
   name: "Card",
   props: {
@@ -21,14 +20,18 @@ export default {
     };
   },
   computed: {
-    ...mapState(["quizStatus"]),
     artSrc() {
       return this.card?.imageLinks?.art_crop ?? "";
     }
   },
   methods: {
-    setLoaded() {
-      this.imgLoaded = true;
+    setLoaded(status) {
+      this.imgLoaded = status;
+    }
+  },
+  watch: {
+    card() {
+      this.imgLoaded = false;
     }
   }
 };
@@ -36,10 +39,10 @@ export default {
 
 <style>
 .art{
-  visibility: hidden;
+  display: none;
 }
 .art.loaded{
-  visibility: visible;
+  display: initial;
 }
 .loader {
     animation: load-spin 1s linear infinite;
