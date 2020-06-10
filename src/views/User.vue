@@ -26,10 +26,10 @@ export default {
   name: "User",
   components: { QButton },
   computed: {
-    ...mapState(["highScore", "lastScore", "username"])
+    ...mapState('u',["highScore", "lastScore", "username"])
   },
   methods: {
-    ...mapActions(["clearLastScore", "clearHighScore"]),
+    ...mapActions('u',["clearLastScore", "clearHighScore"]),
     clearScores() {
       this.clearLastScore();
       this.clearHighScore();

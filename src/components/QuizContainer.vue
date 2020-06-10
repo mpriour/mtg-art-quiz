@@ -27,7 +27,8 @@ export default {
     }
   },
   computed: {
-    ...mapState(["quizStatus","highScore","currentScore","qindex","randomSet"]),
+    ...mapState('q',["quizStatus","qindex","randomSet"]),
+    ...mapState('u',["highScore","currentScore"]),
     ready() {
       return this.quizStatus == "ready";
     },
@@ -52,7 +53,8 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['makeRandom','clearCurrentScore', 'resetIndex', 'clearRandom']),
+    ...mapActions('q',['makeRandom', 'resetIndex', 'clearRandom']),
+    ...mapActions('u',['clearCurrentScore']),
     newGame() {
       this.clearRandom()
       this.makeRandom({

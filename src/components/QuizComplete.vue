@@ -16,10 +16,10 @@ export default {
   name: "QuizComplete",
   components: { Scores, QButton },
   computed: {
-    ...mapState(['currentScore', 'highScore'])
+    ...mapState('u',['currentScore', 'highScore'])
   },
   methods: {
-    ...mapActions(["saveLastScore", "saveHighScore"]),
+    ...mapActions('u',["saveLastScore", "saveHighScore"]),
     playAgain() {
       this.$emit("restart");
     }

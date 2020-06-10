@@ -1,7 +1,16 @@
 <template>
   <div class="hello">
-    <h1>Welcome to the<br><i>Magic : The Gathering</i><br>Art Quiz</h1>
-    <label>Username<br><input :value="user" @blur="setUser" /></label>
+    <h1>
+      Welcome to the
+      <br />
+      <i>Magic : The Gathering</i>
+      <br />Art Quiz
+    </h1>
+    <label>
+      Username
+      <br />
+      <input :value="user" @blur="setUser" />
+    </label>
     <div class="button-container">
       <q-button link="/standard">Standard</q-button>
       <q-button link="/pioneer" class="strikethrough" disabled>
@@ -21,24 +30,28 @@
 </template>
 
 <script>
-import QButton from './QButton'
-import {mapState} from 'vuex'
+import QButton from "./QButton";
+import { mapState, mapActions } from "vuex";
 export default {
   name: "Welcome",
   components: {
     QButton
   },
-  computed: mapState({
-    user: state => state.username
-  }),
+  computed: {
+    ...mapState({
+      user: state => state.u.username
+    })
+  },
   methods: {
-    setUser(evt){
-      this.$store.dispatch('saveUsername', {name: evt.target.value})
+    ...mapActions('u',['saveUsername', 'initializeUser']),
+    ...mapActions('q',['initializeCards']),
+    setUser(evt) {
+      this.saveUsername({ name: evt.target.value })
     }
   },
-  mounted(){
-    this.$store.dispatch('initializeUser')
-    this.$store.dispatch('initializeCards')
+  mounted() {
+    this.initializeUser()
+    this.initializeCards()
   }
 };
 </script>
@@ -71,7 +84,7 @@ a {
   margin: 2rem auto;
 }
 label {
-  font-size:1.75rem;
+  font-size: 1.75rem;
 }
 input {
   font-size: 1.75rem;

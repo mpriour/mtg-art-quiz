@@ -15,7 +15,8 @@ export default {
     Card, Names
   },
   computed: {
-    ...mapState(['randomSet', 'names', 'currentScore', 'qindex']),
+    ...mapState('q',['randomSet', 'names', 'qindex']),
+    ...mapState('u',['currentScore']),
       nameSet(){
         const rnames = []
         const ndxs = new Set()
@@ -36,7 +37,8 @@ export default {
       }
   },
   methods:{
-    ...mapActions(['addCurrentScore','incrementIndex']),
+    ...mapActions('u',['addCurrentScore']),
+    ...mapActions('q',['incrementIndex']),
     checkCorrect(name){
       return name == this.currentCard.name
     },

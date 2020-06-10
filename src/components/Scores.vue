@@ -15,7 +15,7 @@ export default {
     showLast: { type: Boolean, default: true }
   },
   computed: {
-    ...mapState(['lastScore','highScore','currentScore'])
+    ...mapState('u',['lastScore','highScore','currentScore'])
   }
 }
 </script>
