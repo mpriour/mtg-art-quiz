@@ -21,4 +21,18 @@ export default {
 .strikethrough button{
   text-decoration: line-through red solid;
 }
+button {
+  font-size: x-large;
+  margin: 0.5rem 0;
+  color: goldenrod;
+  background-color: #333;
+  border: 2px solid goldenrod;
+  border-radius: 10px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: goldenrod;
+    color: #333;
+  }
+}
 </style>
